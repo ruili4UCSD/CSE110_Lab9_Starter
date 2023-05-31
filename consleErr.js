@@ -1,4 +1,18 @@
 window.addEventListener('DOMContentLoaded', init);
+window.addEventListener('error', function(){
+  TrackJS.track('Testing TrackJS!');
+  alert("error happened somewhere, check it!");
+});
+
+// task 4
+class SecondColumnError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "SecondColumnError";
+  }
+}
+
+
 function init() {
 
   let form = document.querySelector('form');
@@ -13,13 +27,18 @@ function init() {
     try{
       // reg for all decimal num and negative num
       let regex = /^-?\d+(\.\d+)?$/;
-      if( !regex.test(firstNum) || !regex.test(secondNum) ){
-        throw new TypeError("You entered something that is not a number");
+      if( !regex.test(firstNum)){
+        throw new TypeError("You entered something wrong not a number.");
+      }
+      if( !regex.test(secondNum) ){
+        throw new SecondColumnError("You entered something wrong not a number.");
       }
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
       let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
     }catch(err){
-      alert("There is an error in your form: " + err.message );
+      if (err instanceof TypeError) {alert("Error in your first Column: " + err.message ); }
+      else if (err instanceof SecondColumnError) {alert("Error in your second Column: " + err.message ); }
+      else { throw err; }
     }
   });
 
@@ -135,7 +154,10 @@ function init() {
 
   // Trigger a Global Error
   document.getElementById('trigger-error-btn').addEventListener('click', function() {
-    
+    // task 5 error 
+    // const temp = { "name": "Celeste" };
+    // console.log(temp.id);
+    bark();
   });
 
 
