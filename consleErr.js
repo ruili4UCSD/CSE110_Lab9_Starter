@@ -1,17 +1,25 @@
 window.addEventListener('DOMContentLoaded', init);
 function init() {
-  
+
   let form = document.querySelector('form');
   form.addEventListener('submit', e => {
     e.preventDefault();
+
     let output = document.querySelector('output');
     let firstNum = document.querySelector('#first-num').value;
     let secondNum = document.querySelector('#second-num').value;
     let operator = document.querySelector('#operator').value;
-    output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+    // task 3
+    try{
+      if(typeof firstNum !== 'number' || typeof secondNum !== 'number'){
+        throw new TypeError("You entered something that is not a number");
+      }
+      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
+    }catch(err){
+      alert("There is an error in your form: " + err.message );
+    }
   });
-
-  let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
   // Start your code here
   // You may move this JS to another file if you wish
@@ -130,22 +138,17 @@ function init() {
 
 
   // task 3
-  thereIsAnError();
-  tryThrow();
+  // thereIsAnError();
 }
 
-function thereIsAnError() {
-  try{
-    const clickLog = getElementById('log-tn');
-    clickLog.click();
-  }catch(err){
-    alert(err.name);
-    alert("there is an error when you try to click console log, check your code.");
-  }finally{
-    return 0;
-  }
-}
-
-function tryThrow(){
-
-}
+// function thereIsAnError() {
+//   try{
+//     const clickLog = getElementById('log-tn');
+//     clickLog.click();
+//   }catch(err){
+//     alert(err.name);
+//     alert("there is an error when you try to click console log, check your code.");
+//   }finally{
+//     return 0;
+//   }
+// }
