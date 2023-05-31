@@ -11,7 +11,9 @@ function init() {
     let operator = document.querySelector('#operator').value;
     // task 3
     try{
-      if(typeof firstNum !== 'number' || typeof secondNum !== 'number'){
+      // reg for all decimal num and negative num
+      let regex = /^-?\d+(\.\d+)?$/;
+      if( !regex.test(firstNum) || !regex.test(secondNum) ){
         throw new TypeError("You entered something that is not a number");
       }
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
